@@ -1,6 +1,6 @@
 package com.stantonj.SJSC;
 
-import com.stantonj.SimpleJerseyServletContainer;
+import com.stantonj.SimpleJaxRSServletContainer;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -21,7 +21,7 @@ public class test1 {
     }
 
     public static void main(String[] args){
-        SimpleJerseyServletContainer container = new SimpleJerseyServletContainer();
+        SimpleJaxRSServletContainer container = new SimpleJaxRSServletContainer();
         container.AddServlet(new ExampleResource());
 
     }

@@ -1,6 +1,6 @@
 package com.stantonj.SJSC;
 
-import com.stantonj.SimpleJerseyServletContainer;
+import com.stantonj.SimpleJaxRSServletContainer;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
@@ -38,7 +38,7 @@ public class JettyTest {
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.NO_SESSIONS);
         context.setContextPath("/");
 
-        SimpleJerseyServletContainer container = new SimpleJerseyServletContainer();
+        SimpleJaxRSServletContainer container = new SimpleJaxRSServletContainer();
         container.AddServlet(ExampleResource.class);
         container.AddServlet(new ExampleResource2());
 

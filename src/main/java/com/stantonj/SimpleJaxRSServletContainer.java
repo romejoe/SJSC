@@ -20,7 +20,7 @@ import java.util.Map;
 /**
  * Created by Joseph Stanton on 2/19/15.
  */
-public class SimpleJerseyServletContainer extends HttpServlet {
+public class SimpleJaxRSServletContainer extends HttpServlet {
 
     public static class MethodInfo {
         public String Path;
@@ -31,7 +31,7 @@ public class SimpleJerseyServletContainer extends HttpServlet {
 
     private Map<String,Map<String, MethodInfo>> Endpoints;
 
-    public SimpleJerseyServletContainer() {
+    public SimpleJaxRSServletContainer() {
         Endpoints = new HashMap<String, Map<String, MethodInfo>>();
     }
 

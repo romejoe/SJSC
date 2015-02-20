@@ -1,2 +1,2 @@
 # SJSC
-Simple Jersey Servlet Container
+Simple JaxRS Servlet Container
