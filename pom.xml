@@ -6,7 +6,7 @@
 
     <groupId>com.stantonj</groupId>
     <artifactId>SJSC</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.1a</version>
     <dependencies>
         <dependency>
             <groupId>javax.servlet</groupId>

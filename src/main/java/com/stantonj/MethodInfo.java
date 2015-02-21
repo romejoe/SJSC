@@ -68,6 +68,26 @@ public class MethodInfo {
         }
         //TODO: check for class Path annotation
 
+        String PathPrefix = null;
+        Annotation[] annotations = servlet.getDeclaredAnnotations();
+
+        for (Annotation an : annotations) {
+            if (an instanceof javax.ws.rs.Path) {
+                PathPrefix = ((Path) an).value();
+                break;
+            }
+        }
+
+        if(!PathPrefix.startsWith("/")){
+            PathPrefix = "/" + PathPrefix;
+        }
+        if(PathPrefix.endsWith("/")){
+            PathPrefix = PathPrefix.substring(0, PathPrefix.length() - 1);
+        }
+        for(MethodInfo info : Endpoints){
+            info.Path = PathPrefix + info.Path;
+        }
+
         return Endpoints.toArray(new MethodInfo[Endpoints.size()]);
     }
 }
