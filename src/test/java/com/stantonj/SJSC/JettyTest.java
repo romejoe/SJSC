@@ -8,6 +8,10 @@ import org.eclipse.jetty.servlet.ServletHolder;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Joey on 2/19/15.
@@ -18,9 +22,22 @@ public class JettyTest {
     public static class ExampleResource {
         @GET
         @Path("List")
+        @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
         public String getList() {return "List";}
 
+        @GET
+        @Path("Obj")
+        @Produces(MediaType.APPLICATION_XML)
+        public Object getObj() {
+
+            Map<String, String> ret = new HashMap<String,String>();
+            ret.put("asdf", "1");
+            ret.put("qwerty", "3");
+            return ret;
+        }
+
         @GET @Path("bar")
+        @Produces(MediaType.APPLICATION_JSON)
         public String getWidget(@PathParam("foo") String id) {return id;}
     }
 
