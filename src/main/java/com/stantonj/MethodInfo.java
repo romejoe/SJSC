@@ -6,6 +6,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -17,6 +18,7 @@ public class MethodInfo {
     public Method method;
     public Object instance;
     public Set<String> Produces;
+    public List<ArgumentInfo> argumentInfo;
 
     public static MethodInfo[] GetServletMethodInfo(Class<? extends Object> servlet) {
         Method[] methods = servlet.getDeclaredMethods();
@@ -53,6 +55,10 @@ public class MethodInfo {
                     }
                 }
             }
+
+            //Argument Annotations
+            info.argumentInfo = ArgumentInfo.ExtractArgumentInfo(m);
+
             if (info.Path == null)
                 continue;
             if(!info.Path.startsWith("/"))

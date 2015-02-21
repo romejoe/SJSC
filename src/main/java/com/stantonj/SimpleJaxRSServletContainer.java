@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Cookie;
 import javax.xml.ws.http.HTTPBinding;
 import java.io.IOException;
 import java.io.Serializable;
@@ -219,14 +220,14 @@ public class SimpleJaxRSServletContainer extends HttpServlet {
         }
 
 
-
-        try {
+        ret = executeMethod(mi, req);
+        /*try {
             ret = mi.method.invoke(mi.instance);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (InvocationTargetException e) {
             e.printStackTrace();
-        }
+        }*/
 
         if(ret == null) {
             res.setStatus(500);
@@ -236,6 +237,49 @@ public class SimpleJaxRSServletContainer extends HttpServlet {
         Object out = transformer.getTransformation(ret, null);
 
         res.getOutputStream().print(String.valueOf(out));
+    }
+
+    private Object executeMethod(MethodInfo mi, HttpServletRequest req){
+
+
+        //build arguments
+        Method m = mi.method;
+        List<ArgumentInfo> ai = mi.argumentInfo;
+
+        Object[] arguments = new Object[ai.size()];
+        for(int i = 0; i < arguments.length; ++i){
+            ArgumentInfo curInfo = ai.get(i);
+            Object InitialValue = curInfo.DefaultValue;
+
+            Object tmp = null;
+            if(curInfo.FormParam != null){
+                tmp = req.getParameter(curInfo.FormParam);
+            }else if(curInfo.CookieParam != null){
+                for(javax.servlet.http.Cookie cookie : req.getCookies()){
+                    if(cookie.getName() == curInfo.CookieParam){
+                        tmp = cookie;
+                        break;
+                    }
+                }
+            } else if(curInfo.HeaderParam != null){
+                //TODO: Join all headers
+                tmp = req.getHeader(curInfo.HeaderParam);
+            } else if(curInfo.PathParam != null){
+                //TODO: Parse Path
+            } else if(curInfo.QueryParam != null){
+                String queryStr = req.getQueryString();
+                if(queryStr == null){
+                    tmp = null;
+                }
+                else{
+                    tmp = QueryStringParser.ParseQueryString(queryStr).get(curInfo.QueryParam);
+                }
+            }
+
+
+        }
+
+        return null;
     }
 
 
